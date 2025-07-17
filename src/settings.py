@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'store',
     'django.contrib.postgres',
-    'cart'
+    'cart',
+    'order',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -57,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart'
             ],
         },
     },
@@ -148,4 +150,4 @@ MESSAGE_TAGS = {
    
 }
 
-cart_session_id = 'cart'
+CART_SESSION_ID = 'cart'

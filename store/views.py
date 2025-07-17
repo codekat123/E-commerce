@@ -1,7 +1,7 @@
 from django.shortcuts import render , get_object_or_404
 from .models import product,category
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank
-
+from cart.forms import CartAddProductForm
 
 
 def home(request,category_slug=None):
@@ -24,7 +24,8 @@ def home(request,category_slug=None):
 def product_detail(request,product_slug):
      products = get_object_or_404(product,slug = product_slug ,status = product.Status.available )
      context = {
-          'detail':products
+          'detail':products,
+          'form':CartAddProductForm()
      }
      return render(request,'store/product_detail.html',context)
 
