@@ -38,7 +38,9 @@ class Cart:
 
      def __iter__(self):
           product_id = self.cart.keys()
+          
           products = product.objects.filter(id__in=product_id)
+
           cart = self.cart.copy()
           for Product in products:
                cart[str(Product.id)]['product'] = Product

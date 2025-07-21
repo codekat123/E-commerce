@@ -8,7 +8,7 @@ def generate_order_id(length=8):
      return ''.join(random.choices(characters,k =length))
 
 class Order(models.Model):
-     order_id = models.CharField(max_length = 8 , default = generate_order_id(),unique=True)
+     order_id = models.CharField(max_length = 8 , default = generate_order_id,unique=True)
      first_name = models.CharField(max_length = 30)
      last_name = models.CharField(max_length = 30)
      city = models.CharField(max_length = 30)
@@ -29,11 +29,11 @@ class Order(models.Model):
           return f'order_id:{self.order_id}'
      def save(self,*args,**kwargs):
           if not self.order_id:
-               unique_id = generate_order_id()
+               unique_id = generate_order_id
                while Order.objects.filter(order_id = unique_id):
-                    unique_id = generate_order_id()
+                    unique_id = generate_order_id
                self.order_id = unique_id
-               super().save(*args,**kwargs)
+          super().save(*args,**kwargs)
      def get_total_cost(self):
           return sum(item.get_cost() for item in self.items.all())
      
@@ -42,7 +42,7 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
      order = models.ForeignKey(Order,related_name='items',on_delete = models.CASCADE)
-     Product = models.ForeignKey(product,related_name='order_item',on_delete= models.CASCADE)
+     product = models.ForeignKey(product,related_name='order_item',on_delete= models.CASCADE)
      price = models.DecimalField(max_digits=6,decimal_places=2)
      quantity = models.PositiveIntegerField(default=1)
 

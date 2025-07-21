@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
 
@@ -23,7 +24,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.png" alt="">
+                    <img src="{% static 'images/slider-img.png' %}" alt="">
                   </div>
                 </div>
               </div>
@@ -47,7 +48,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.png" alt="">
+                    <img src="{% static 'images/slider-img.png' %}" alt="">
                   </div>
                 </div>
               </div>

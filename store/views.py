@@ -2,16 +2,20 @@ from django.shortcuts import render , get_object_or_404
 from .models import product,category
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank
 from cart.forms import CartAddProductForm
-
+from django.core.cache import cache
 
 def home(request,category_slug=None):
      Category = None
      categories = category.objects.all()
-     products = product.objects.filter(status = product.Status.available)
-     if category_slug:
-         Category = get_object_or_404(category,slug=category_slug)
-         products = product.objects.filter(category = Category)
-
+     cache_key = f"products_{category_slug if category_slug else 'all'}"
+     products = cache.get(cache_key)
+     if products is None:
+          if category_slug:
+               Category = get_object_or_404(category,slug = category_slug)
+               products = product.objects.filter(category = Category.id,status = product.Status.available)
+          else:
+               products = product.objects.filter(status=product.Status.available)     
+          cache.set(cache_key,products,timeout=60 *20)
      context = {
           'products':products,
           'categories':categories,
@@ -22,7 +26,11 @@ def home(request,category_slug=None):
 
 
 def product_detail(request,product_slug):
-     products = get_object_or_404(product,slug = product_slug ,status = product.Status.available )
+     cache_key = f"product_{product_slug}"
+     products = cache.get(cache_key)
+     if products is None :
+          products = get_object_or_404(product,slug = product_slug ,status = product.Status.available )
+          cache.set(cache_key,products,timeout=60*30)
      context = {
           'detail':products,
           'form':CartAddProductForm()
