@@ -36,8 +36,8 @@ class Order(models.Model):
           super().save(*args,**kwargs)
      def get_total_cost(self):
           return sum(item.get_cost() for item in self.items.all())
-     
-
+     def get_full_name(self):
+          return self.first_name + self.last_name
 
 
 class OrderItem(models.Model):
@@ -51,3 +51,15 @@ class OrderItem(models.Model):
 
      def get_cost(self):
           return self.price * self.quantity
+     
+class OrderPay(models.Model):
+     order = models.ForeignKey(Order,on_delete = models.CASCADE)
+     pay_phone_number = models.CharField(max_length = 11)
+     pay_image = models.ImageField(upload_to = 'vodafone_cash')
+     created_at = models.DateTimeField(auto_now_add = True)
+
+     class Meta:
+          ordering = ['-created_at']
+     def __str__(self) -> str:
+          return f"your order id is : {self.order.order_id}"
+     

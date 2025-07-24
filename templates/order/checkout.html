@@ -7,7 +7,7 @@
     {% for item in cart %}
     <li>
       {{item.product.name}} : {{item.quantity}}
-      <br>
+      
       <span>price : {{item.price}}</span>
     </li>
     {% endfor %}
@@ -24,10 +24,43 @@
 </div>
 <br />
 <div class="container justify-content-center">
+<style>
+  .form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px 25px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+  }
+
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="form-container">
   <form method="POST">
-    {% csrf_token %} {{form|crispy}}
-    <input type="submit" value="Place order" class="btn btn-primary" />
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Place order" class="submit-btn" />
   </form>
+</div>
+
 </div>
 <br><br><br>
 {% endblock %}
