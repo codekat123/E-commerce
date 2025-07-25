@@ -4,6 +4,21 @@ from .forms import OrderCreateForm , OrderPayForm
 from cart.cart import Cart
 from .tasks import send_mails
 from .models import Order
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.contrib.admin.views.decorators import staff_member_required
+import weasyprint
+import os
+
+
+@staff_member_required
+def admin_order_pdf(request,order_id):
+     order = get_object_or_404(Order,order_id=order_id)
+     url = render_to_string('order/pdf.html',{'order':order})
+     response = HttpResponse(content_type = 'application/pdf')
+     response['Content-disposition'] = f'filename=order_{order.order_id}.pdf'
+     weasyprint.HTML(string=url).write_pdf(response)
+     return response
 
 
 def order_create(request):
@@ -39,6 +54,8 @@ def order_pay_by_vodafone(request,order_id):
                order_pay.order = order
                order_pay.paid = True
                order_pay.save()
+               order.paid = True
+               order.save()
                return redirect('order:payment_success',order_id = order_id)
           else:
                context = {

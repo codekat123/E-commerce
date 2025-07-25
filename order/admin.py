@@ -4,6 +4,18 @@ import csv
 import datetime
 from django.http import HttpResponse
 from django.db import models
+from django.utils.safestring import mark_safe
+from django.urls import reverse
+
+
+def order_pdf(obj):
+     url = reverse('order:admin_order_pdf',args=[obj.order_id])
+     return mark_safe(f'<a href="{url}" target="_blank" >PDF</a>')
+
+order_pdf.short_description = 'invoice'
+
+
+
 
 def export_to_csv(modeladmin,request,queryset):
      #  HTTP Response
@@ -35,6 +47,6 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-     list_display = ["first_name","email","paid","created_at"]
+     list_display = ["first_name","email","paid","created_at",order_pdf]
      inlines = [OrderItemInline]
      actions = [export_to_csv]
