@@ -2,7 +2,8 @@ from django.shortcuts import render , redirect , get_object_or_404
 from .models import OrderItem
 from .forms import OrderCreateForm , OrderPayForm
 from cart.cart import Cart
-from .tasks import send_mails
+from .tasks import send_mails , send_invoice
+from .tasks import send_invoice
 from .models import Order
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -71,4 +72,5 @@ def order_pay_by_vodafone(request,order_id):
                
 def pay_successful(request,order_id):
      order = get_object_or_404(Order,order_id=order_id)
+     send_invoice.delay(order.order_id)
      return render(request,'order/payment_success.html',{'order':order})

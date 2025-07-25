@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'cart',
     'order',
+    'coupons',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
