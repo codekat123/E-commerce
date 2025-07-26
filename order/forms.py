@@ -12,7 +12,7 @@ class OrderPayForm(forms.ModelForm):
      class Meta:
           model = OrderPay
           fields = ['pay_phone_number','pay_image']
-     def clean_pay_phone(self):
+     def clean_pay_phone_number(self):
           pay_phone = self.cleaned_data.get('pay_phone_number')
           initial_number = ['011','012','010','015']
           if not pay_phone.isdigit():

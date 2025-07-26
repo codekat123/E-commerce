@@ -3,6 +3,7 @@ from .models import product,category
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank
 from cart.forms import CartAddProductForm
 from django.core.cache import cache
+from django.core.paginator import Paginator
 
 def home(request,category_slug=None):
      Category = None
@@ -16,10 +17,20 @@ def home(request,category_slug=None):
           else:
                products = product.objects.filter(status=product.Status.available)     
           cache.set(cache_key,products,timeout=60 *20)
+
+     paginator = Paginator(products,1)
+     page_number = request.GET.get('page')
+     page_obj = paginator.get_page(page_number)
+
+
+
+
+
      context = {
           'products':products,
           'categories':categories,
           'category':Category,
+          'page_obj':page_obj,
                 }
      return render(request,'store/home.html',context)
 

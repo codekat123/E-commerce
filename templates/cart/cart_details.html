@@ -57,7 +57,7 @@
                     <div class="cart_summary">
                         <h4>Cart Summary</h4>
                         <ul>
-                            <li>Subtotal: <span>$300</span></li>
+                            <li>Subtotal: <span>${{ cart.get_total_price }}</span></li>
                             <li>Tax: <span>$30</span></li>
                             <li>Total: <span>${{ cart.get_total_price }}</span></li>
                             <li>counts product: <span>
@@ -69,10 +69,15 @@
               {% endif %}
               {% endwith %}
               </span></li>
+              {% if cart.coupon %}
+              <li style="color:green">
+              Price after discount : <span>{{cart.get_discounted_total}}</span>
+              </li>
+              {%  endif %}
                         </ul>
-                        <form class="coupon_form mt-4">
-                            <label for="coupon_code">Coupon Code</label>
-                            <input type="text" id="coupon_code" class="form-control" placeholder="Enter your code">
+
+                        <form class="coupon_form mt-4" action="{% url 'coupons:apply' %}" method="POST">
+                              {{coupon}} {% csrf_token %}
                             <button type="submit" class="btn btn-primary mt-2">Apply Coupon</button>
                         </form>
                         <a href="{% url 'order:create' %}" class="btn btn-success mt-4 w-100">Proceed to Checkout</a>

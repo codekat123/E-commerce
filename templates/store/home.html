@@ -99,7 +99,7 @@
         </h2>
       </div>
       <div class="row">
-      {% for product in products %}
+      {% for product in page_obj %}
         <div class="col-sm-6 col-lg-4">
           <div class="box">
             <div class="img-box">
@@ -131,11 +131,20 @@
         </div>
         {% endfor %}
       </div>
-      <div class="btn_box">
-        <a href="" class="view_more-link">
-          View More
-        </a>
-      </div>
+     <div class="paginator">
+    {% if page_obj.has_previous %}
+        <a href="?page=1" class="view_more-link">First</a><br>
+        <a href="?page={{page_obj.previous_page_number}}" class="view_more-link">Previous</a>
+    {% endif %}
+
+    <span>{{page_obj.number}} from {{page_obj.paginator.num_pages}}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}" class="view_more-link">Next</a><br>
+        <a href="?page={{page_obj.paginator.num_pages}}" class="view_more-link">Last</a>
+    {% endif %}
+</div>
+
     </div>
   </section>
 

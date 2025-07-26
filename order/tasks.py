@@ -35,3 +35,4 @@ def send_invoice(order_id):
      email.attach(f'order_{order.order_id}.pdf',out.getvalue(),'application/pdf')
      email.send()
      return True
+
