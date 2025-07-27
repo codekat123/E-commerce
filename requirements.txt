@@ -13,6 +13,7 @@ cssselect2==0.8.0
 Django==5.2.4
 django-crispy-forms==2.4
 django-redis==6.0.0
+djangorestframework==3.16.0
 fonttools==4.59.0
 kombu==5.5.4
 packaging==25.0

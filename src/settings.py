@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'cart',
     'order',
     'coupons',
+    'apis',
+    'rest_framework',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -165,3 +167,18 @@ CACHES = {
 }
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERY_BROKER_URL = "redis://localhost:6379"
+
+from django.utils.translation import gettext_lazy as _ 
+
+LANGUAGE_CODE = 'en'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+LANGUAGES = [
+     ('en',_('english')),
+     ('ar',_('Arabic')),
+]
+
+LOCALE_PATHS = [
+     os.path.join(BASE_DIR,'locale')
+]

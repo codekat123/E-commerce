@@ -8,7 +8,9 @@ urlpatterns = [
     path('accounts/',include('accounts.urls',namespace = 'accounts')),
     path('cart',include('cart.urls', namespace='cart')),
     path('order',include('order.urls',namespace='order')),
-    path('coupons',include('coupons.urls',namespace='coupons'))
+    path('coupons',include('coupons.urls',namespace='coupons')),
+    # APIS
+    path('v1/api/',include('apis.urls',namespace='api'))
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
