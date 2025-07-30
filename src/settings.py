@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'coupons',
     'apis',
     'rest_framework',
+    'rest_framework_simplejwt',
     
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -141,7 +142,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ahmedjader42@gmail.com'
-EMAIL_HOST_PASSWORD = 'eqcu kwvs bcum jpre'
+EMAIL_HOST_PASSWORD = 'fcfp fsug mmmm zbui'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AUTH_USER_MODEL = 'accounts.account'
@@ -182,3 +183,11 @@ LANGUAGES = [
 LOCALE_PATHS = [
      os.path.join(BASE_DIR,'locale')
 ]
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

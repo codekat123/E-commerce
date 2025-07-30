@@ -83,3 +83,5 @@ def activate(request,uid64,token):
           user = None
           messages.error(request,'something went wrong')
           return redirect('accounts:register')
+     
+
