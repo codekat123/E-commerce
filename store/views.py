@@ -62,3 +62,12 @@ def product_search(request):
           'results':results,
      }
      return render(request,'store/search.html',context)
+
+
+
+
+
+def about(request):
+     return render(request,'pages/about.html')
+def why(request):
+     return render(request,'pages/why.html')

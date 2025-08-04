@@ -32,10 +32,9 @@
               <i class="fa fa-star-half-o" aria-hidden="true"></i>
             </div>
             <form action="{% url 'cart:cart_add' detail.id %}" method="POST">
-            {{form}}
-            {% csrf_token %}
-            <input type="submit" value="Add to cart" style="background-color: green; color: white; padding: 10px; border: none; border-radius: 5px;">
-
+            {{form}}{% csrf_token %}
+            <input type="submit" value="Add to cart" name = "action" style="background-color: green; color: white; padding: 10px; border: none; border-radius: 5px;">
+            <input type="submit" value='buy' name = "action" style="background-color: green; color: white; padding: 10px; border: none; border-radius: 5px;">
             </form>
           </div>
         </div>

@@ -31,7 +31,6 @@ class product(models.Model):
      price = models.DecimalField(max_digits=6,decimal_places=2)
      category = models.ForeignKey(category,on_delete=models.CASCADE,null=True,blank=True)
      status = models.CharField(max_length=2,choices=Status.choices,default=Status.available)
-     status = models.CharField(max_length=2,choices=Status.choices,default=Status.available)
      created_at = models.DateTimeField(auto_now_add=True)
      update = models.DateTimeField(auto_now_add=True)
      feature = models.CharField(max_length = 250)

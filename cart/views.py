@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render , redirect , get_object_or_404
 from django.views.decorators.http import require_POST
 from store.models import product
 from .cart import Cart
@@ -13,7 +13,10 @@ def cart_add(request,product_id):
      if form.is_valid():
           cd = form.cleaned_data
           cart.add(Product,cd['quantity'],cd['override'])
-     return redirect('cart:cart_detail')
+     action = request.POST.get('action')
+     if action == 'buy':
+          return redirect('cart:cart_detail')
+     return redirect('/')
           
 @require_POST
 def cart_remove(request,product_id):
@@ -21,7 +24,7 @@ def cart_remove(request,product_id):
      Product = get_object_or_404( product , id=product_id , status = product.Status.available) 
      cart.remove(Product)
      return redirect("cart:cart_detail")
-
+ 
 def cart_detail(request):
      cart = Cart(request)
      for item in cart:

@@ -60,10 +60,10 @@ def login(request):
           user = authenticate(email = email, password = password)
           if user is not None :
                auth_login(request,user)
-               messages.success(request,'longin is successfully')
+               messages.success(request,'login is successfully')
                return redirect('store:home')
           else:
-               messages.error(request,'invalid login')
+               messages.error(request,'invalid password')
                return redirect('accounts:login')
      return render(request,'accounts/login.html')
 

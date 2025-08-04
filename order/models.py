@@ -3,6 +3,7 @@ import random
 import string
 from django.utils import timezone
 from store.models import product
+
 def generate_order_id(length=8):
      characters = string.ascii_letters + string.digits
      return ''.join(random.choices(characters,k =length))

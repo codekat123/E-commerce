@@ -8,7 +8,9 @@ from .serializers import CategorySerializer , ProductSerializer , RegisterSerial
 from .tasks import verification
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 
 @api_view(['GET','POST','PATCH','PUT','DELETE'])
@@ -72,7 +74,9 @@ def product_api(request,slug=None):
           return Response('the data you seleted has been delete ',status = status.HTTP_NO_CONTENT)
 
 @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
+@permission_classes([AllowAny])
 def register_api(request, id=None):
+    print("REGISTER VIEW CALLED")
     if request.method == 'GET':
         if id:
             user = get_object_or_404(account, id=id)
@@ -98,12 +102,11 @@ def register_api(request, id=None):
             serializer.save()
             return Response({'message': 'account updated'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
     elif request.method == 'DELETE':
         user = get_object_or_404(account, id=id)
         user.delete()
         return Response({'message': 'account deleted'}, status=status.HTTP_204_NO_CONTENT)
-
 
 @api_view(['GET'])
 def activation(request, uid, token):
@@ -119,3 +122,17 @@ def activation(request, uid, token):
         return Response({'message': 'Your account is activated successfully'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+def logout(request):
+     try :
+          refresh_token = request.data.get('refresh')
+          if not refresh_token:
+               return Response({'message':'refresh token is required'},status = status.HTTP_400_BAD_REQUEST)
+          token = RefreshToken(refresh_token)
+          token.blacklist()
+          return Response({'message':'successfully logout'},status = status.HTTP_200_OK)
+     except Exception as e:
+          return Response({'error':'Invalid token'},status = status.HTTP_400_BAD_REQUEST)
